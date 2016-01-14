@@ -45,10 +45,10 @@ t_line  *ft_create_elem(int fd, char *buf)
 	ptr->read = (char **)malloc(sizeof(char *) * 1000000);
 	ptr->read[0] = (char *)malloc(sizeof(char) * 1000000);
 	ptr->fd = fd;
+	ptr->next = NULL;
 	ptr->line = 0;
 	ptr->lasti = 0;
 	ptr->lastj = 0;
-	ft_putchar('X');
 	ft_fill_tab(buf, ptr);
 	return (ptr);
 }
@@ -60,17 +60,15 @@ t_line	*ft_fill_fd(int fd, char *buf, t_line *begin)
 	ptr = begin;
 	while (ptr != NULL)
 	{
-		ft_putchar('A');
-		if (fd == ptr->fd)
+		if (ptr->fd == fd)
 		{
 			ft_fill_tab(buf, ptr);
 			return (ptr);
 		}
-		else if (fd != ptr->fd && ptr->next == NULL)
+		if (fd != ptr->fd && ptr->next == NULL)
 		{
-			ft_putchar('X');
 			ptr->next = ft_create_elem(fd, buf);
-			return (ptr->next);
+			return (ptr);
 		}
 		ptr = ptr->next;
 	}
@@ -100,7 +98,9 @@ int		get_next_line(int const fd, char **line)
 		ptr = begin;
 	}
 	else
+	{
 		ptr = ft_fill_fd(fd, buf, begin);
+	}
 	*line = ptr->read[ptr->line];
 	ptr->line++;
 	if (ret == -1)

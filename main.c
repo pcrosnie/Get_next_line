@@ -24,7 +24,7 @@ int		main(int argc, char **argv)
 
 	str = NULL;
 	fd = open(argv[1], O_RDONLY);
-	while ((ret = get_next_line(fd, &str)))
+	while ((ret = get_next_line(fd, &str)) && i < 4)
 	{
 		ft_putstr(str);
 		ft_putchar('\n');

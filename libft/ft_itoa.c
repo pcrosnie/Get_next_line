@@ -3,57 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdieulan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pcrosnie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/04 21:16:21 by rdieulan          #+#    #+#             */
-/*   Updated: 2015/12/15 18:43:14 by rdieulan         ###   ########.fr       */
+/*   Created: 2015/11/28 14:39:09 by pcrosnie          #+#    #+#             */
+/*   Updated: 2015/12/03 12:00:05 by pcrosnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int			itoa_size(int n)
+static int	ft_count_for_ten_m(int n)
 {
 	int	i;
 
-	i = 1;
-	if (n < 0)
+	i = 0;
+	while (n != 0)
 	{
-		i++;
-		n = (unsigned int)n * (-1);
-	}
-	while (n > 9)
-	{
-		n /= 10;
+		n = n / 10;
 		i++;
 	}
 	return (i);
 }
 
-char				*ft_itoa(int n)
+char		*ft_itoa(int n)
 {
-	char			sign;
-	char			*result;
 	int				i;
+	int				j;
+	unsigned int	nb;
+	char			*str;
 
-	i = 0;
-	sign = '+';
-	result = (char *)malloc(sizeof(char) * (itoa_size(n) + 1));
-	if (!result)
+	if (n < -2147483648 || n > 2147483647)
 		return (NULL);
+	j = 1;
+	nb = n;
+	i = ft_count_for_ten_m(n);
+	str = (char *)ft_memalloc(i + 1);
+	if (n == 0)
+		str[0] = '0';
 	if (n < 0)
 	{
-		sign = '-';
-		n = (unsigned int)n * (-1);
+		nb = -n;
+		str[0] = '-';
+		j = 0;
 	}
-	while ((unsigned int)n > 9)
+	while (i > 0)
 	{
-		result[i] = ((unsigned int)n % 10) + 48;
-		n = (unsigned int)n / 10;
-		i++;
+		str[i-- - j] = (nb % 10) + 48;
+		nb = nb / 10;
 	}
-	result[i] = (unsigned int)n + 48;
-	((sign == '-') ? result[i + 1] = sign : 0) && i++;
-	result[i + 1] = '\0';
-	return (ft_strrev(result));
+	return (str);
 }

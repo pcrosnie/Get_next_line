@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdieulan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pcrosnie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/04 16:57:52 by rdieulan          #+#    #+#             */
-/*   Updated: 2015/12/09 16:38:29 by rdieulan         ###   ########.fr       */
+/*   Created: 2015/11/27 15:48:59 by pcrosnie          #+#    #+#             */
+/*   Updated: 2015/12/03 11:31:22 by pcrosnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+char	*ft_strsub(const char *s, unsigned int start, size_t len)
 {
-	char			*result;
-	unsigned int	i;
+	size_t	i;
+	size_t	j;
+	char	*cut;
 
-	i = 0;
-	result = (char *)malloc(sizeof(char) * (len + 1));
-	if (result && s)
+	i = (size_t)start;
+	j = 0;
+	cut = (char *)malloc(len);
+	if (cut == NULL || !s)
+		return (NULL);
+	while (j < len)
 	{
-		while (i < len)
-		{
-			result[i] = s[start + i];
-			i++;
-		}
-		result[i] = '\0';
-		return (result);
+		cut[j] = s[i];
+		i++;
+		j++;
 	}
-	return (NULL);
+	return (cut);
 }

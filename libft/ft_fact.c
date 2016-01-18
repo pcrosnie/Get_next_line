@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_carraydup.c                                     :+:      :+:    :+:   */
+/*   ft_fact.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdieulan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pcrosnie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/09 15:22:56 by rdieulan          #+#    #+#             */
-/*   Updated: 2015/12/10 16:50:59 by rdieulan         ###   ########.fr       */
+/*   Created: 2015/12/03 15:43:11 by pcrosnie          #+#    #+#             */
+/*   Updated: 2015/12/03 15:57:43 by pcrosnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_carraydup(char **array)
+long	ft_fact(int n)
 {
-	int		i;
-	char	**cp;
+	long nb;
 
-	i = 0;
-	if (!array)
-		return (NULL);
-	while (array[i])
-		i++;
-	cp = (char **)malloc(sizeof(char *) * (i));
-	if (!cp)
-		return (NULL);
-	i = 0;
-	while (array[i])
+	nb = (int)n;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+		return (0);
+	n--;
+	while (n > 0)
 	{
-		cp[i] = ft_strdup(array[i]);
-		i++;
+		nb *= n;
+		n--;
 	}
-	return (cp);
+	return (nb);
 }

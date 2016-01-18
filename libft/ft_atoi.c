@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdieulan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pcrosnie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/04 12:48:39 by rdieulan          #+#    #+#             */
-/*   Updated: 2015/12/08 14:13:23 by rdieulan         ###   ########.fr       */
+/*   Created: 2015/11/28 14:42:06 by pcrosnie          #+#    #+#             */
+/*   Updated: 2015/12/03 15:34:07 by pcrosnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,28 @@
 
 int		ft_atoi(const char *str)
 {
-	unsigned int	i;
-	unsigned int	result;
-	int				sign;
+	int	i;
+	int	nb;
+	int	n;
 
-	sign = 1;
 	i = 0;
-	result = 0;
-	while (str[i] &&
-			(str[i] == ' ' || str[i] == '\f' ||
-			str[i] == '\r' || str[i] == '\t' ||
-			str[i] == '\v' || str[i] == '\n'))
+	nb = 0;
+	n = 0;
+	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\r'
+			|| str[i] == '\v' || str[i] == '\f')
 		i++;
-	if (str[i] == '+')
-		i++;
-	else if (str[i] == '-' && (sign = -1))
-		i++;
-	while (str[i] && ft_isdigit(str[i]))
+	if (str[i] == 45)
 	{
-		result *= 10;
-		result += (str[i] - 48);
+		if (str[i + 1] == '+' || str[i - 1] == '+')
+			return (0);
+		n = i;
 		i++;
 	}
-	return (sign * result);
+	if (str[i] == '+')
+		i++;
+	while (str[i] <= 57 && str[i] >= 48 && str[i])
+		nb = nb * 10 + str[i++] - 48;
+	if (str[n] == 45)
+		nb = -nb;
+	return (nb);
 }

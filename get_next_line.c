@@ -6,7 +6,7 @@
 /*   By: pcrosnie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 14:25:50 by pcrosnie          #+#    #+#             */
-/*   Updated: 2016/01/13 17:18:46 by pcrosnie         ###   ########.fr       */
+/*   Updated: 2016/01/18 17:28:52 by pcrosnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,22 @@ void    ft_fill_tab(char *buf, t_line *ptr)
 	int i;
 	int j;
 	int k;
+	int a;
 
 	i = ptr->lasti;
 	j = ptr->lastj;
 	k = 0;
-	while (buf[k] && k < BUFF_SIZE + 1 && i <= k)
+	a = 0;
+	while (buf[k] && k < BUFF_SIZE + 1)
 	{
 		if (buf[k] == '\n')
 		{
+			k++;
 			i++;
 			j = 0;
 			ptr->read[i] = (char *)malloc(sizeof(char) * 1000000);
-			k++;
 		}
-		if (buf[k] && k < BUFF_SIZE + 1 && i <= k)
+		if (buf[k] && k < BUFF_SIZE + 1)
 			ptr->read[i][j++] = buf[k++];
 	}
 	ptr->lasti = i;
@@ -53,11 +55,11 @@ t_line  *ft_create_elem(int fd, char *buf)
 	return (ptr);
 }
 
-t_line	*ft_fill_fd(int fd, char *buf, t_line *begin)
+t_line	*ft_fill_fd(int fd, char *buf, t_line **begin)
 {
 	t_line *ptr;
 
-	ptr = begin;
+	ptr = *begin;
 	while (ptr != NULL)
 	{
 		if (ptr->fd == fd)
@@ -65,10 +67,10 @@ t_line	*ft_fill_fd(int fd, char *buf, t_line *begin)
 			ft_fill_tab(buf, ptr);
 			return (ptr);
 		}
-		if (fd != ptr->fd && ptr->next == NULL)
+		else if (fd != ptr->fd && ptr->next == NULL)
 		{
 			ptr->next = ft_create_elem(fd, buf);
-			return (ptr);
+			return (ptr->next);
 		}
 		ptr = ptr->next;
 	}
@@ -77,11 +79,12 @@ t_line	*ft_fill_fd(int fd, char *buf, t_line *begin)
 
 int		get_next_line(int const fd, char **line)
 {
-	char buf[BUFF_SIZE + 1];
+	char *buf;;
 	static t_line *begin;
 	t_line *ptr;
 	int ret;
 
+	buf = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
 	while ((ret = read(fd, buf, BUFF_SIZE + 1)) && ft_strchr(buf, '\n') == NULL)
 	{
 		if (!begin)
@@ -90,7 +93,10 @@ int		get_next_line(int const fd, char **line)
 			ptr = begin;
 		}
 		else
-			ptr = ft_fill_fd(fd, buf, begin);
+		{
+			ptr = ft_fill_fd(fd, buf, &begin);
+		}
+		buf = ft_memset(buf, '\0', BUFF_SIZE + 1);
 	}
 	if (!begin)
 	{
@@ -99,7 +105,7 @@ int		get_next_line(int const fd, char **line)
 	}
 	else
 	{
-		ptr = ft_fill_fd(fd, buf, begin);
+		ptr = ft_fill_fd(fd, buf, &begin);
 	}
 	*line = ptr->read[ptr->line];
 	ptr->line++;

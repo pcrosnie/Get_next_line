@@ -1,39 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itab_sort.c                                     :+:      :+:    :+:   */
+/*   ft_islower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdieulan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pcrosnie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/09 15:55:39 by rdieulan          #+#    #+#             */
-/*   Updated: 2015/12/10 16:52:45 by rdieulan         ###   ########.fr       */
+/*   Created: 2015/11/28 14:42:20 by pcrosnie          #+#    #+#             */
+/*   Updated: 2015/11/28 14:42:23 by pcrosnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_itab_sort(int *tab, size_t size)
+int	ft_islower(int c)
 {
-	int		tmp;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	tmp = 0;
-	while (j < size)
-	{
-		while (i < size)
-		{
-			if (tab[i] > tab[j])
-			{
-				tmp = tab[i];
-				tab[i] = tab[j];
-				tab[j] = tmp;
-			}
-			i++;
-		}
-		i = 0;
-		j++;
-	}
+	if (c >= 97 && c <= 122)
+		return (1);
+	return (0);
 }

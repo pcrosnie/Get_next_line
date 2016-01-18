@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprime.c                                       :+:      :+:    :+:   */
+/*   ft_printtab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdieulan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pcrosnie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/09 16:16:20 by rdieulan          #+#    #+#             */
-/*   Updated: 2015/12/10 16:51:24 by rdieulan         ###   ########.fr       */
+/*   Created: 2015/12/03 16:11:30 by pcrosnie          #+#    #+#             */
+/*   Updated: 2015/12/03 16:30:30 by pcrosnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isprime(int nb)
+void	ft_print_char_tab(char **tab)
 {
 	int	i;
 
-	i = 2;
-	if (nb <= 1 || nb > 2147483647)
-		return (0);
-	else
+	i = 0;
+	while (tab[i])
 	{
-		while (i <= nb / i)
-		{
-			if (nb % i == 0)
-				return (0);
-			i++;
-		}
-		return (1);
+		ft_putstr(tab[i++]);
+		ft_putchar('\n');
 	}
 }

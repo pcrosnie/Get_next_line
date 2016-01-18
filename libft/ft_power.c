@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   ft_power.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcrosnie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/25 15:23:25 by pcrosnie          #+#    #+#             */
-/*   Updated: 2015/11/30 13:53:36 by pcrosnie         ###   ########.fr       */
+/*   Created: 2015/12/03 10:04:31 by pcrosnie          #+#    #+#             */
+/*   Updated: 2015/12/03 10:53:01 by pcrosnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+long	ft_power(int n, int power)
 {
-	void	*tmp;
+	long		nb;
 
-	tmp = ft_memalloc(len);
-	tmp = ft_memcpy(tmp, src, len);
-	dst = ft_memcpy(dst, tmp, len);
-	free(tmp);
-	return (dst);
+	nb = n;
+	if (power == 0)
+		return (1);
+	while (power > 1)
+	{
+		nb *= n;
+		power--;
+	}
+	return (nb);
 }

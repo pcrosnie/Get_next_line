@@ -3,72 +3,108 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rdieulan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pcrosnie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/04 20:38:24 by rdieulan          #+#    #+#             */
-/*   Updated: 2015/12/09 17:08:24 by rdieulan         ###   ########.fr       */
+/*   Created: 2015/12/02 14:22:32 by pcrosnie          #+#    #+#             */
+/*   Updated: 2015/12/04 14:45:35 by pcrosnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned int		ft_nword(char const *s, char c)
+static size_t	ft_count_words(const char *s, char c)
 {
-	unsigned int	i;
-	unsigned int	nword;
+	size_t	i;
+	size_t	n;
 
-	nword = 0;
 	i = 0;
-	if (s[i] != c)
-	{
-		nword++;
+	n = 0;
+	while (s[i] == c)
 		i++;
-	}
 	while (s[i])
 	{
-		if (s[i] == c)
-			if (s[i + 1] != c)
-				nword++;
-		i++;
-	}
-	return (nword);
-}
-
-static char			**ft_dosplit(char const *s, char c, int nword, int i)
-{
-	char			**result;
-	int				start;
-
-	start = 0;
-	result = (char **)malloc(sizeof(char *) * nword + 1);
-	if (!result)
-		return (NULL);
-	nword = 0;
-	while (s[i])
-	{
-		if (s[i] == c && s[i])
+		while (s[i] != c && s[i])
 			i++;
-		else
-		{
-			start = i;
-			while (s[i] != c && s[i])
-				i++;
-			result[nword] = ft_strsub(s, start, (i - start));
-			if (!result)
-				return (NULL);
-			nword++;
-		}
+		if (s[i] == '\0')
+			return (n + 1);
+		n++;
+		while (s[i] == c)
+			i++;
+		if (s[i] == '\0')
+			return (n);
+		i++;
 	}
-	result[nword] = NULL;
-	return (result);
+	return (n);
 }
 
-char				**ft_strsplit(char const *s, char c)
+static size_t	ft_count_i(const char *s, char c, size_t nb)
 {
-	unsigned int	nword;
+	size_t	i;
+	size_t	n;
 
-	if (!s || !c)
+	i = 0;
+	n = 0;
+	while (s[i] == c)
+		i++;
+	if (nb == 0)
+		return (i + 1);
+	while (s[i] && n < nb)
+	{
+		while (s[i] != c && s[i])
+			i++;
+		if (s[i] == '\0')
+			return (i);
+		n++;
+		while (s[i] == c)
+			i++;
+		if (s[i] == '\0')
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
+static size_t	ft_linelen(const char *s, char c, size_t nb)
+{
+	size_t	i;
+	size_t	n;
+
+	i = 0;
+	n = 0;
+	while (i < ft_count_i(s, c, nb) - 1)
+		i++;
+	while (s[i] != c)
+	{
+		i++;
+		n++;
+	}
+	return (n);
+}
+
+char			**ft_strsplit(const char *s, char c)
+{
+	size_t	i;
+	size_t	j;
+	size_t	n;
+	char	**tab;
+
+	i = 0;
+	j = 0;
+	if (!s)
 		return (NULL);
-	nword = ft_nword(s, c);
-	return (ft_dosplit(s, c, nword, 0));
+	tab = (char **)malloc(sizeof(tab) * (ft_count_words(s, c) + 1));
+	while (i < ft_count_words(s, c) && tab)
+	{
+		tab[i] = (char *)malloc(sizeof(tab[i]) * ft_linelen(s, c, i));
+		if (!tab[i])
+			return (NULL);
+		j = 0;
+		n = ft_count_i(s, c, i) - 1;
+		while (j < ft_linelen(s, c, i))
+			tab[i][j++] = s[n++];
+		tab[i][j] = '\0';
+		i++;
+	}
+	tab[i] = NULL;
+	return (tab);
 }

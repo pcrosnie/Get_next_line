@@ -6,14 +6,14 @@
 /*   By: pcrosnie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:03:15 by pcrosnie          #+#    #+#             */
-/*   Updated: 2016/01/13 17:18:52 by pcrosnie         ###   ########.fr       */
+/*   Updated: 2016/01/18 17:15:01 by pcrosnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFF_SIZE 1500
+# define BUFF_SIZE 1
 # include <fcntl.h>
 # include "libft.h"
 

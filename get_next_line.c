@@ -6,7 +6,7 @@
 /*   By: pcrosnie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 14:25:50 by pcrosnie          #+#    #+#             */
-/*   Updated: 2016/01/18 17:28:52 by pcrosnie         ###   ########.fr       */
+/*   Updated: 2016/01/18 17:53:09 by pcrosnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int		get_next_line(int const fd, char **line)
 	buf = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
 	while ((ret = read(fd, buf, BUFF_SIZE + 1)) && ft_strchr(buf, '\n') == NULL)
 	{
+		if (ret == -1)
+			return (-1);
 		if (!begin)
 		{
 			begin = ft_create_elem(fd, buf);

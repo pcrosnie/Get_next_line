@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pcrosnie <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/08 13:18:36 by pcrosnie          #+#    #+#             */
-/*   Updated: 2016/01/18 17:55:57 by pcrosnie         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
 
 int		main(int argc, char **argv)
@@ -17,38 +5,30 @@ int		main(int argc, char **argv)
 	int fd;
 	char *str;
 	int ret;
-	int ret2;
-	int fd2;
 	int i;
-	i = 0;
+	int j;
+	int k;
 
-	str = NULL;
+	i = 0;
+	j = 0;
+	k = 0;
 	fd = open(argv[1], O_RDONLY);
-	while (i < 4 && (ret = get_next_line(fd, &str)))
+	if (fd == -1)
+		return (1);
+	if (argc != 1)
 	{
-		ft_putnbr(ret);
-		ft_putchar('\n');
-		ft_putstr(str);
-		ft_putchar('\n');
-		i++;
+			while ((ret = get_next_line(fd, &str)))
+			{
+				ft_putstr(str);
+				ft_putchar('\n');
+				i++;
+			}
 	}
-	ft_putchar('\n');
-	ft_putstr("File 2\n");
-	fd2 = open(argv[2], O_RDONLY);
-	while ((ret2 = get_next_line(fd2, &str)))
+	else
 	{
-		ft_putnbr(ret2);
-		ft_putchar('\n');
-		ft_putstr(str);
-		ft_putchar('\n');
-	}
-	ft_putnbr(ret2);
-	ft_putchar('\n');
-	ft_putstr("File 1\n");
-	while ((ret = get_next_line(fd, &str)))
-	{
-		ft_putstr(str);
-		ft_putchar('\n');
+		get_next_line(0, &str);
+				ft_putstr(str);
+				ft_putchar('\n');
 	}
 	return (0);
 }
